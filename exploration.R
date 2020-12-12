@@ -15,5 +15,8 @@ head(data)
 sapply(data, function(x) length(unique(x)))
 # 186 Countries, 5 Regions
 
+# Organize data for the first world map
 GDP_data <- c(data$Country.Name, data$GDP.per.Capita..PPP.)
 print(GDP_data)
+
+# begin putting GDP_data into map
