@@ -1,11 +1,6 @@
 # Data exploration of global economic freedom
 
 # Dependencies
-library("tmap")
-library("tmaptools")
-library("sf")
-library("leaflet")
-install.packages("maps")
 library("maps")
 
 # Import data
@@ -24,5 +19,21 @@ GDP_data <- data.frame(name_column, gdp_pc_column)
 print(GDP_data)
 
 # begin putting GDP_data into map
-map.world <- map_data("world")
-head(map.world)
+map_world <- map_data("world")
+head(map_world)
+
+# Construct map
+ggplot() +
+  geom_map(data = map_world, map = map_world,
+           aes(x = long, y = lat, group = group, map_id=region),
+           fill = "white", colour = "#7f7f7f", size=0.5) + 
+  geom_map(data = GDP_data, map = map_world,
+           aes(fill=value, map_id=region),
+           colour="#7f7f7f", size=0.5) +
+  coord_map("rectangular", lat0=0, xlim=c(-180,180), ylim=c(-90, 90)) +
+  scale_fill_continuous(low="thistle2", high="darkred", guide="colorbar") +
+  scale_y_continuous(breaks=c()) +
+  scale_x_continuous(breaks=c()) +
+  labs(fill="legend", title="Title", x="", y="") +
+  theme_bw()
+
